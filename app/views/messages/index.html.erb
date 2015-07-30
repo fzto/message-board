@@ -11,14 +11,28 @@
         <span class="label label-info"><%= message.name %></span>
         <%= message.body %>
         <br>
+        
         <% end %>
     </div>
 </div>
 
 <%= form_for(Message.new) do |f| %>
+    <% if @message.errors.present? %>
+        <div class="alert alert-danger">
+            <%= alert %>
+            <ul>
+                <% @message.errors.full_messages.each do |full_message| %>
+                <li>
+                    <%= full_message %>
+                </li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+    
     <label class="col-md-1 control-label">名前：</label>
     <div class="col-md-11"><%= f.text_field :name, class:"form-control" %></div>
     <label class="col-md-1 control-label">内容：</label>
-    <div class="col-md-11"><%= f.text_area :body, class:"form-control textarea" %></div>
+    <div class="col-md-11 mb20"><%= f.text_area :body, class:"form-control textarea" %></div>
     <div class="col-md-offset-1 col-md-11"><%= f.submit class: "btn btn-primary btn-block" %></div>
 <% end %>
